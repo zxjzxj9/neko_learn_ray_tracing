@@ -9,7 +9,7 @@ Image::Image(int h, int w): h(h), w(w) {
     img = std::unique_ptr<char[]>(new char[tot]);
 };
 
-void Image::set_pixel(int x, int y, Color c) {
+void Image::set_pixel(int x, int y, const Color& c) {
     int offset = 3*(y*w + x);
     if(offset + 3 > 3*h*w) throw std::out_of_range("Image index out of bound!");
     img[offset] = c.r;
@@ -34,6 +34,7 @@ void ImageWriter::save(const Image& img) const{
     fout.write(header.c_str(), header.size());
     std::stringstream buf;
     buf<<img.h<<" "<<img.w<<std::endl;
+    buf<<255<<std::endl;
     auto tmps = buf.str();
     fout.write(tmps.c_str(), tmps.size());
 
@@ -44,4 +45,5 @@ void ImageWriter::save(const Image& img) const{
         }
         fout.write("\n", sizeof(char));
     }
+    fout.close();
 }

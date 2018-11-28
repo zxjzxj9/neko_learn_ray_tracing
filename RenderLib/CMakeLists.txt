@@ -5,6 +5,8 @@ project(RenderLib)
 
 add_compile_options(-std=c++11)
 
-add_library(librender STATIC render.cpp)
+add_library(render STATIC render.cpp)
 
+add_executable(test.x test.cpp)
+target_link_libraries(test.x render)
 

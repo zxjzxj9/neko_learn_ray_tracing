@@ -22,10 +22,12 @@ struct Color {
 class Image {
 public:
     Image(int h, int w);
-    ~Image();
+    ~Image(){};
     // x -> w, y -> h
-    void set_pixel(int x, int y, Color c);
+    void set_pixel(int x, int y, const Color& c);
     Color get_pixel (int x, int y) const;
+    int get_height() {return h;}
+    int get_width() {return w;}
     friend class ImageWriter;
 
 private:
