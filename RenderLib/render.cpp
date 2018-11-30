@@ -6,7 +6,7 @@
 
 Image::Image(int h, int w): h(h), w(w) {
     int tot = 3*h*w;
-    img = std::unique_ptr<char[]>(new char[tot]);
+    img = std::unique_ptr<unsigned char[]>(new unsigned char[tot]);
 };
 
 void Image::set_pixel(int x, int y, const Color& c) {
@@ -33,7 +33,7 @@ void ImageWriter::save(const Image& img) const{
     std::string header{"P6\n#sample image\n"};
     fout.write(header.c_str(), header.size());
     std::stringstream buf;
-    buf<<img.h<<" "<<img.w<<std::endl;
+    buf<<img.w<<" "<<img.h<<std::endl;
     buf<<255<<std::endl;
     auto tmps = buf.str();
     fout.write(tmps.c_str(), tmps.size());

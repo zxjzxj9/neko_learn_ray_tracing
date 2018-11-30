@@ -14,9 +14,9 @@
 // r, g, b 0~255
 
 struct Color {
-    char r;
-    char g;
-    char b;
+    unsigned char r;
+    unsigned char g;
+    unsigned char b;
 };
 
 class Image {
@@ -33,7 +33,7 @@ public:
 private:
     int h;
     int w;
-    std::unique_ptr<char[]> img;
+    std::unique_ptr<unsigned char[]> img;
 };
 
 class ImageWriter {
