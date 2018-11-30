@@ -13,8 +13,8 @@ void Image::set_pixel(int x, int y, const Color& c) {
     int offset = 3*(y*w + x);
     if(offset + 3 > 3*h*w) throw std::out_of_range("Image index out of bound!");
     img[offset] = c.r;
-    img[offset+1] = c.r;
-    img[offset+2] = c.r;
+    img[offset+1] = c.g;
+    img[offset+2] = c.b;
 }
 
 Color Image::get_pixel(int x, int y) const {
@@ -40,10 +40,14 @@ void ImageWriter::save(const Image& img) const{
 
     for(int i=0; i<img.h; i++) {
         for(int j=0; j<img.w; j++) {
-            Color c = img.get_pixel(i, j);
-            fout.write(reinterpret_cast<char*>(&c), sizeof(Color));
+            Color c = img.get_pixel(j, i);
+            std::cout<<(int)c.r<<" "<<(int)c.g<<" "<<(int)c.b<<std::endl;
+            //fout.write(reinterpret_cast<char*>(&c), sizeof(Color));
+            fout.write(reinterpret_cast<char*>(&c.r), sizeof(char));
+            fout.write(reinterpret_cast<char*>(&c.g), sizeof(char));
+            fout.write(reinterpret_cast<char*>(&c.b), sizeof(char));
         }
-        fout.write("\n", sizeof(char));
+        //fout.write("\n", sizeof(char));
     }
     fout.close();
 }
