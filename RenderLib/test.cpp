@@ -4,6 +4,7 @@
 
 
 #include "render.h"
+#include "vec.h"
 
 int main() {
     Image img(256, 256);
@@ -21,6 +22,9 @@ int main() {
 
     ImageWriter ir("./test.ppm");
     ir.save(img);
+
+    vec<3> data(1.0,2.0,3.0);
+    data.print();
 
     return 0;
 }
