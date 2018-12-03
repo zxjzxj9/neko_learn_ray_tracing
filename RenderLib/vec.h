@@ -60,45 +60,54 @@ public:
         assert(this->dim == v.dim);
         auto ret = new vec<N>();
         for(int i=0; i<N; i++) {
-            ret[i] = this->data[i] + v.data[i];
+            ret->data[i] = this->data[i] + v.data[i];
         }
         return *ret;
     }
 
-    inline vec& operator-(const vec& v) const{
+    inline vec<N>& operator-(const vec& v) const{
         assert(this->dim == v.dim);
         auto ret = new vec<N>();
         for(int i=0; i<N; i++) {
-            ret[i] = this->data[i] - v.data[i];
+            ret->data[i] = this->data[i] - v.data[i];
         }
         return *ret;
     }
 
-    inline vec& operator-() const {
+    inline vec<N>& operator-() const {
         auto ret = new vec<N>(*this);
         for(int i=0; i<N; i++) ret->data[i] = -ret->data[i];
         return *ret;
     }
 
-    inline vec& operator*(const vec& v) const{
+    inline vec<N>& operator*(const vec& v) const{
         assert(this->dim == v.dim);
         auto ret = new vec<N>();
         for(int i=0; i<N; i++) {
-            ret[i] = this->data[i] * v.data[i];
+            ret->data[i] = this->data[i] * v.data[i];
         }
         return *ret;
     }
 
-    inline vec& operator/(const vec& v) const{
+    inline vec<N>&operator*(const float c) const {
+        auto ret = new vec<N>();
+        for(int i=0; i<N; i++) {
+            ret->data[i] = this->data[i] * c;
+        }
+        return *ret;
+
+    }
+
+    inline vec<N>& operator/(const vec& v) const{
         assert(this->dim == v.dim);
         auto ret = new vec<N>();
         for(int i=0; i<N; i++) {
-            ret[i] = this->data[i] / v.data[i];
+            ret->data[i] = this->data[i] / v.data[i];
         }
         return *ret;
     }
 
-    inline vec& operator+=(const vec& v) {
+    inline vec<N>& operator+=(const vec& v) {
         assert(this->dim == v.dim);
         for(int i=0; i<N; i++) {
             this->data[i] += v.data[i];
@@ -106,7 +115,7 @@ public:
         return *this;
     }
 
-    inline vec& operator-=(const vec& v) {
+    inline vec<N>& operator-=(const vec& v) {
         assert(this->dim == v.dim);
         for(int i=0; i<N; i++) {
             this->data[i] -= v.data[i];
@@ -114,7 +123,7 @@ public:
         return *this;
     }
 
-    inline vec& operator*=(const vec& v) {
+    inline vec<N>& operator*=(const vec& v) {
         assert(this->dim == v.dim);
         for(int i=0; i<N; i++) {
             this->data[i] *= v.data[i];
@@ -122,7 +131,7 @@ public:
         return *this;
     }
 
-    inline vec& operator/=(const vec& v) {
+    inline vec<N>& operator/=(const vec& v) {
         assert(this->dim == v.dim);
         for(int i=0; i<N; i++) {
             this->data[i] /= v.data[i];
@@ -139,7 +148,7 @@ public:
         return sum;
     }
 
-    inline vec& cross(const vec& v) const {
+    inline vec<N>& cross(const vec& v) const {
         assert(this->dim == 3);
         assert(v.dim == 3);
         auto ret = new vec();
@@ -159,6 +168,21 @@ public:
         this -> c = c;
     }
 
+    vec<N>& unit() {
+        auto ret = new vec<N>(*this);
+        auto norm = ret->norm();
+        for(int i=0; i<dim; i++) {
+            ret->data[i] /= norm;
+        }
+        return *ret;
+    }
+
+    Color getColor() {return this -> c;}
+
+    float operator[](int i) const {
+        return data[i];
+    }
+
 private:
     std::unique_ptr<float []> data;
     Color c;
@@ -171,6 +195,11 @@ void vec<N>::print() {
         std::cout<<data[i]<<", ";
     }
     std::cout<<data[N-1]<<")"<<std::endl;
+}
+
+template <int N>
+vec<N>& operator*(float c, const vec<N>& v) {
+    return v*c;
 }
 
 #endif //NEKO_LEARN_RAY_TRACING_VEC_H
