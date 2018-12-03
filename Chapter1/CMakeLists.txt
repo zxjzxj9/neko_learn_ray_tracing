@@ -7,6 +7,7 @@ project(Chapter1)
 include_directories(${CMAKE_SOURCE_DIR}/RenderLib)
 link_directories(${CMAKE_SOURCE_DIR}/RenderLib)
 
+add_compile_options(-std=c++11)
 #add_library(render STATIC ${CMAKE_SOURCE_DIR}/RenderLib/render.cpp)
 
 add_executable(main.x main.cpp)
