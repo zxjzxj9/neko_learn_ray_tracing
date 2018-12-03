@@ -4,8 +4,8 @@
 
 
 int main(int argc, char** argv) {
-    int w = 512;
-    int h = 512;
+    int w = 800;
+    int h = 400;
 
     using vec3 = vec<3>;
 

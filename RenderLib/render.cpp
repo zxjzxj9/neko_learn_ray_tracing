@@ -41,7 +41,7 @@ void ImageWriter::save(const Image& img) const{
     for(int i=0; i<img.h; i++) {
         for(int j=0; j<img.w; j++) {
             Color c = img.get_pixel(j, i);
-            std::cout<<(int)c.r<<" "<<(int)c.g<<" "<<(int)c.b<<std::endl;
+            //std::cout<<(int)c.r<<" "<<(int)c.g<<" "<<(int)c.b<<std::endl;
             //fout.write(reinterpret_cast<char*>(&c), sizeof(Color));
             fout.write(reinterpret_cast<char*>(&c.r), sizeof(char));
             fout.write(reinterpret_cast<char*>(&c.g), sizeof(char));
