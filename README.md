@@ -28,6 +28,6 @@ $$(\mathbf{r_0}-\mathbf{r_c})^2 +2(\mathbf{r_0}-\mathbf{r_c})\cdot \mathbf{v} \c
 
 We can simply judge if the ray has hit the surface by the following variable:
 
-$$ \Delta = 4(\mathbf{r_0}-\mathbf{r_c})^2 - 4*[(\mathbf{r_0}-\mathbf{r_c})^2 - r^2]$$
+$$ \Delta = 4[(\mathbf{r_0}-\mathbf{r_c})\cdot\mathbf{v}]^2 - 4*[(\mathbf{r_0}-\mathbf{r_c})^2 - r^2]$$
 
 We have hit, tangent to and away from sphere 3 situations, correponding to $ \Delta >0, \Delta =0, \Delta <0$ three cases.

@@ -52,9 +52,9 @@ public:
         }
     }
 
-    vec(const vec&& v) {
-        data = std::move(v.data);
-    }
+    //vec(const vec&& v) {
+    //    data = std::move(v.data);
+    //}
 
     inline vec& operator+(const vec& v) const{
         assert(this->dim == v.dim);
@@ -160,6 +160,10 @@ public:
 
     inline float norm() const {
         return sqrt(this->dot(*this));
+    }
+
+    inline float normsq() const {
+        return this->dot(*this);
     }
 
     void print();
