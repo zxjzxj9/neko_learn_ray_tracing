@@ -18,6 +18,7 @@ public:
 
     }
 
+    // return parameters
     float intercept(ray r) {
         vec3 dv = r.dv();
         vec3 dv2 = r.start() - rc;
