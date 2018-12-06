@@ -172,7 +172,7 @@ public:
         this -> c = c;
     }
 
-    vec<N>& unit() {
+    vec<N>& unit() const {
         auto ret = new vec<N>(*this);
         auto norm = ret->norm();
         for(int i=0; i<dim; i++) {
