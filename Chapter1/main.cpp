@@ -1,6 +1,6 @@
 #include "render.h"
 #include "vec.h"
-
+#include "geometry.h"
 
 
 int main(int argc, char** argv) {
@@ -18,6 +18,10 @@ int main(int argc, char** argv) {
 
     vec3 origin(0.0, 0.0, 0.0);
 
+    vec3 rc(1.0, 1.0, -2.0);
+
+    sphere sp(rc, 2.0);
+
     auto u = rt - lt;
     auto v = lb - lt;
 
@@ -31,6 +35,11 @@ int main(int argc, char** argv) {
             float t = 0.5*(unit[1] + 1.0);
             vec3 color_vec = (1.0-t)*vec3(1.0, 1.0, 1.0) + t*vec3(0.5, 0.7, 1.0);
             img.set_pixel(j, i, Color{color_vec[0], color_vec[1], color_vec[2]});
+
+            auto rt = ray(origin, vec);
+            Color s_color{1.0f, 0.0f, 0.0f};
+            float tmp = sp.intercept(rt);
+            if(tmp > 0) img.set_pixel(j, i, s_color);
             // vec<3> vec3(x, y, 0.2);
         }
     }
