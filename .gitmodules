@@ -1,0 +1,3 @@
+[submodule "RenderLib/googletest"]
+	path = RenderLib/googletest
+	url = https://github.com/abseil/googletest

@@ -6,7 +6,11 @@
 #include "render.h"
 #include "vec.h"
 
+#include "gtest/gtest.h"
+
 int main() {
+
+    // For image write test
     Image img(256, 256);
     for(int i=0; i<img.get_height(); i++) {
         for(int j=0; j<img.get_width(); j++) {
@@ -19,12 +23,13 @@ int main() {
             }
         }
     }
-
     ImageWriter ir("./test.ppm");
     ir.save(img);
 
+
     vec<3> data(1.0,2.0,3.0);
     data.print();
+
 
     return 0;
 }
