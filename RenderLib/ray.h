@@ -12,7 +12,7 @@ class ray {
 public:
     ray(){}
     ray(vec3 s, vec3 e): s(s), e(e) {
-        auto dtn = (e - s).unit();
+        dtn = (e - s).unit();
     }
     vec3 start() const {return s;};
     vec3 end() const {return e;};

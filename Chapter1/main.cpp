@@ -18,7 +18,7 @@ int main(int argc, char** argv) {
 
     vec3 origin(0.0, 0.0, 0.0);
 
-    vec3 rc(1.0, 1.0, -2.0);
+    vec3 rc(0.0, 0.0, -2.0);
 
     sphere sp(rc, 2.0);
 
@@ -37,14 +37,14 @@ int main(int argc, char** argv) {
             img.set_pixel(j, i, Color{color_vec[0], color_vec[1], color_vec[2]});
 
             auto rt = ray(origin, vec);
-            (origin-vec).print();
+            //(origin-vec).unit().print();
             //origin.print();
             //vec.print();
             //rt.dv().print();
             //std::cout<<rt.dv().norm()<<std::endl;
             Color s_color{1.0f, 0.0f, 0.0f};
             float tmp = sp.intercept(rt);
-            // std::cout<<tmp<<std::endl;
+            std::cout<<tmp<<std::endl;
             if(tmp > 0) img.set_pixel(j, i, s_color);
             // vec<3> vec3(x, y, 0.2);
         }

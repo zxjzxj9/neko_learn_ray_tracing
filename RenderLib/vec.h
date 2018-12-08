@@ -52,6 +52,17 @@ public:
         }
     }
 
+    vec& operator=(const vec& v) {
+       assert(this->dim == v.dim);
+       if(!data) {
+           data = std::unique_ptr<float[]>(new float[N]);
+       }
+       for(int i=0; i<N; i++) {
+           data[i] = v.data[i];
+       }
+       return *this;
+    }
+
     //vec(const vec&& v) {
     //    data = std::move(v.data);
     //}
@@ -188,7 +199,7 @@ public:
     }
 
 private:
-    std::unique_ptr<float []> data;
+    std::unique_ptr<float []> data = nullptr;
     Color c;
 };
 
