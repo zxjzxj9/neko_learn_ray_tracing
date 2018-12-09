@@ -33,3 +33,7 @@ $$ \Delta = 4[(\mathbf{r_0}-\mathbf{r_c})\cdot\mathbf{v}]^2 - 4*[(\mathbf{r_0}-\
 We have hit, tangent to and away from sphere 3 situations, correponding to $ \Delta >0, \Delta =0, \Delta <0$ three cases. After knowing the hit situation of each ray, it is easy to draw a sphere as follows.
 
 ![red_shpere.png](./Chapter1/bg_sphere_red.png)
+
+## **Chapter 2.** Add a normal vector to the sphere
+
+From the above chapter, we can have the intersection point between the sphere and the ray, therefore it is easy to computer the normal vector of hit point.
