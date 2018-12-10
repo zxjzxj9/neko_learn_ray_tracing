@@ -28,7 +28,7 @@ public:
             // dummy value
             return -1.0;
         } else {
-            return -proj + sqrt(delta);
+            return -proj - sqrt(delta);
         }
         // dummy return
         return 0.0;

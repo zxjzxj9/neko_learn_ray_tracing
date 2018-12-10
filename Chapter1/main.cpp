@@ -17,7 +17,6 @@ int main(int argc, char** argv) {
     vec3 rb(2.0, -1.0, -1.0);
 
     vec3 origin(0.0, 0.0, 0.0);
-
     vec3 rc(0.0, 0.0, -2.0);
 
     sphere sp(rc, 1.0);
