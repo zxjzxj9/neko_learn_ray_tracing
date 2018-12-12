@@ -38,6 +38,11 @@ void background(Image& img) {
     return;
 }
 
+void draw(Image& img) {
+
+
+}
+
 
 int main() {
 
