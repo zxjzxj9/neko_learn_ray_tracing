@@ -10,5 +10,5 @@ link_directories(${CMAKE_SOURCE_DIR}/RenderLib)
 add_compile_options(-std=c++11)
 #add_library(render STATIC ${CMAKE_SOURCE_DIR}/RenderLib/render.cpp)
 
-add_executable(main.x main.cpp)
-target_link_libraries(main.x render)
+add_executable(chapter1.x main.cpp)
+target_link_libraries(chapter1.x render)

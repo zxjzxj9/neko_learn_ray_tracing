@@ -25,7 +25,7 @@ void background(Image& img) {
     auto wtot = img.get_width();
 
     for(int i=0; i<htot; i++) {
-        for(int j=0; j<img.wtot; j++){
+        for(int j=0; j<wtot; j++){
             float y = static_cast<float>(i)/htot;
             float x = static_cast<float>(j)/wtot;
             auto vec = x*u + y*v + lt;
