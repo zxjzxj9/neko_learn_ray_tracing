@@ -36,4 +36,6 @@ We have hit, tangent to and away from sphere 3 situations, correponding to $ \De
 
 ## **Chapter 2.** Add a normal vector to the sphere
 
-From the above chapter, we can have the intersection point between the sphere and the ray, therefore it is easy to computer the normal vector of hit point.
+From the above chapter, we can have the intersection point between the sphere and the ray, therefore it is easy to computer the normal vector of hit point. By calculating the normal vector and give colors to pixels according to the normal vector of the sphere surface, we can render the surface as follows.
+
+![norm_sphere.png](./Chapter2/norm_sphere.png)

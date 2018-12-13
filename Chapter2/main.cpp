@@ -40,7 +40,28 @@ void background(Image& img) {
 
 void draw(Image& img) {
 
+    vec3 rc(0.0, 0.0, -2.0);
+    sphere sp(rc, 1.0);
 
+    auto htot = img.get_height();
+    auto wtot = img.get_width();
+
+    for(int i=0; i<htot; i++) {
+        for(int j=0; j<wtot; j++){
+            float y = static_cast<float>(i)/htot;
+            float x = static_cast<float>(j)/wtot;
+            auto vec = x*u + y*v + lt;
+            auto rt = ray(origin, vec);
+            float tmp = sp.intercept(rt);
+            if(tmp > 0) {
+                vec3 nvec = (rt.point(tmp) - rc).unit();
+                Color s_color{static_cast<float>((nvec[0] + 1.0)/2.0),
+                              static_cast<float>((nvec[1] + 1.0)/2.0),
+                              static_cast<float>((nvec[2] + 1.0)/2.0)};
+                img.set_pixel(j, i, s_color);
+            } else continue;
+        }
+    }
 }
 
 
@@ -50,6 +71,8 @@ int main() {
     int h = 400;
     Image img(h,w);
     background(img);
-
+    draw(img);
+    ImageWriter ir("./test.ppm");
+    ir.save(img);
     return 0;
 }
