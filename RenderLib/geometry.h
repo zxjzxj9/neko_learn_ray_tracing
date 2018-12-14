@@ -11,11 +11,20 @@
 
 using vec3 = vec<3>;
 
-class sphere {
+Color green(vec3 t) {
+    return Color(0.0f, 0.0f, 0.0f);
+}
+
+class geometry {
+public:
+    virtual float intercept(ray) = 0;
+    virtual Color color(vec3) = 0;
+};
+
+class sphere: public geometry {
 public:
 
-    sphere(vec3 rc, float radius): rc(rc), radius(radius) {
-
+    sphere(vec3 rc, float radius, Color(*cfunc)(vec3) = green): rc(rc), radius(radius), cfunc(cfunc) {
     }
 
     // return parameters
@@ -30,14 +39,16 @@ public:
         } else {
             return -proj - sqrt(delta);
         }
-        // dummy return
-        return 0.0;
+    }
+
+    Color color(vec3 t) {
+        return cfunc(t);
     }
 
 private:
     vec3 rc;
     float radius;
-
+    Color (*cfunc)(vec3);
 };
 
 
