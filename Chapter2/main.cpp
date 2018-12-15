@@ -2,6 +2,7 @@
 // Created by Victor Zhang on 2018/12/10.
 //
 
+#include <vector>
 #include "render.h"
 #include "vec.h"
 #include "geometry.h"
@@ -64,6 +65,43 @@ void draw(Image& img) {
     }
 }
 
+Color color(const vec3& n) {
+    return Color{n[0], n[1], n[2]};
+}
+
+void draw2(Image& img) {
+    vec3 rc1(0.0, 0.0, -2.0);
+    vec3 rc2(0.0, -2.0, -2.0);
+    //sphere sp1(rc1, 1.0);
+    //sphere sp2(rc2, 4.0);
+    std::vector<geometry*> gs;
+    gs.push_back(new sphere(rc1, 1.0, color));
+    gs.push_back(new sphere(rc2, 4.0));
+
+    auto htot = img.get_height();
+    auto wtot = img.get_width();
+
+    for(int i=0; i<htot; i++) {
+        for(int j=0; j<wtot; j++){
+
+            float y = static_cast<float>(i)/htot;
+            float x = static_cast<float>(j)/wtot;
+            auto vec = x*u + y*v + lt;
+            auto rt = ray(origin, vec);
+            float tmp0 = 0.0;
+            Color s_color = img.get_pixel(j, i);
+            for(auto& g: gs) {
+                float tmp1 = g->intercept(rt);
+                if(tmp1 > tmp0) {
+                    auto p = rt.point(tmp1);
+                    tmp0 = tmp1;
+                    s_color = g->color(p);
+                }
+                img.set_pixel(j, i, s_color);
+            }
+        }
+    }
+}
 
 int main() {
 
