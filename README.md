@@ -39,3 +39,10 @@ We have hit, tangent to and away from sphere 3 situations, correponding to $ \De
 From the above chapter, we can have the intersection point between the sphere and the ray, therefore it is easy to computer the normal vector of hit point. By calculating the normal vector and give colors to pixels according to the normal vector of the sphere surface, we can render the surface as follows.
 
 ![norm_sphere.png](./Chapter2/norm_sphere.png)
+
+Of course, we need a library that can handle multiple objects, so we design an abstract parent class geometry, which has two method, **intercept** and **color**, the first one return the parameter *t* where the ray intercepts with the geometry object, the second decide the surface color of object which hit a ray. This can be seen as follows. Here we place another green sphere as the background. So we can see a "green background". 
+
+![norm_sphere_bg.png](./Chapter2/norm_sphere_bg.png)
+
+## **Chapter 3.** Anti-aliasing
+

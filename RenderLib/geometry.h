@@ -12,7 +12,7 @@
 using vec3 = vec<3>;
 
 Color green(const vec3& t) {
-    return Color(0.0f, 0.0f, 0.0f);
+    return Color(0.0f, 1.0f, 0.0f);
 }
 
 class geometry {
@@ -39,7 +39,7 @@ public:
             // dummy value
             return -1.0;
         } else {
-            return -proj - sqrt(delta);
+            return -proj - sqrt(delta) > 0? -proj - sqrt(delta) :  -proj + sqrt(delta) ;
         }
     }
 
