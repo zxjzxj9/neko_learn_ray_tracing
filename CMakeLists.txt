@@ -5,5 +5,6 @@ project(neko_learn_ray_tracing)
 add_subdirectory(RenderLib)
 add_subdirectory(Chapter1)
 add_subdirectory(Chapter2)
+add_subdirectory(Chapter3)
 
 
