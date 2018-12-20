@@ -5,8 +5,40 @@
 #include "render.h"
 #include "geometry.h"
 #include "vec.h"
+
 #include <iostream>
 
+
+using vec3 = vec<3>;
+const vec3 lt(-2.0, 1.0, -1.0);
+const vec3 lb(-2.0, -1.0, -1.0);
+const vec3 rt(2.0, 1.0, -1.0);
+const vec3 rb(2.0, -1.0, -1.0);
+const vec3 origin(0.0, 0.0, 0.0);
+// const vec3 rc(0.0, 0.0, -2.0);
+
+auto u = rt - lt;
+auto v = lb - lt;
+
+void background(Image& img) {
+    for(auto pix = img.begin(); pix != img.end(); ++pix) {
+        auto coord = pix.coord();
+        auto vec = coord.first*u + coord.second*v + lt;
+        auto unit = vec.unit();
+        float t = 0.5*(unit[1] + 1.0);
+        vec3 color_vec = (1.0-t)*vec3(1.0, 1.0, 1.0) + t*vec3(0.5, 0.7, 1.0);
+        pix.set( Color{color_vec[0], color_vec[1], color_vec[2]});
+    }
+    return;
+}
+
 int main() {
+    int w = 800;
+    int h = 400;
+    Image img(h,w);
+    background(img);
+
+    ImageWriter ir("./test.ppm");
+    ir.save(img);
     return 0;
 }

@@ -48,6 +48,7 @@ public:
     int get_width() {return w;}
     friend class ImageWriter;
 
+
     class Iterator {
     public:
         Iterator(Image& img, int i=0, int j=0): img(img), i(i), j(j) {
@@ -59,6 +60,7 @@ public:
         };
 
         void set(const Color& c) {
+            //std::cout<<j << " " <<i<<std::endl;
             img.set_pixel(j, i, c);
         }
 
@@ -66,12 +68,19 @@ public:
             j++;
             i += j/img.w;
             j %= img.w;
+            //std::cout<<j << " " <<i<<std::endl;
             return *this;
         }
 
         bool operator==(const Iterator& iter) {
+            //std::cout<<j << " " <<i<< "," << iter.j<<"  "<<iter.i<<std::endl;
             return (this->i == iter.i) && (this->j == iter.j);
         }
+
+        bool operator!=(const Iterator& iter) {
+            return !((*this)==iter);
+        }
+
 
     private:
         Image& img;
@@ -82,14 +91,14 @@ public:
 
     };
 
+
     Iterator begin() {
         return Iterator(*this, 0, 0);
     }
 
     Iterator end() {
-        return Iterator(*this, h+1, 0);
+        return Iterator(*this, h, 0);
     }
-
 
 private:
     int h;
