@@ -11,6 +11,7 @@
 #include <memory>
 #include <sstream>
 #include <cstring>
+#include <random>
 // r, g, b 0~255
 
 struct Color {
@@ -55,13 +56,23 @@ public:
 
         }
 
-        std::pair<float, float> coord() {
-            return std::pair<float, float>(static_cast<float>(i)/img.h, static_cast<float>(j)/img.w);
+        std::pair<float, float> coord(bool anti_alias=false) {
+            if(anti_alias) {
+                return std::pair<float, float>((static_cast<float>(j)+dist(rg))/img.w,
+                                               (static_cast<float>(i)+dist(rg))/img.h) ;
+            }
+            else {
+                return std::pair<float, float>(static_cast<float>(j)/img.w, static_cast<float>(i)/img.h) ;
+            }
         };
 
         void set(const Color& c) {
             //std::cout<<j << " " <<i<<std::endl;
             img.set_pixel(j, i, c);
+        }
+
+        Color get() {
+            return img.get_pixel(j, i);
         }
 
         Iterator& operator++() {
@@ -88,7 +99,8 @@ public:
         unsigned char* g;
         unsigned char* b;
         int i, j;
-
+        std::mt19937 rg{std::random_device{}()};
+        std::uniform_real_distribution<float> dist{0,1};
     };
 
 
