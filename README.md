@@ -45,5 +45,7 @@ Of course, we need a library that can handle multiple objects, so we design an a
 ![norm_sphere_bg.png](./Chapter2/norm_sphere_bg.png)
 
 ## **Chapter 3.** Anti-aliasing
-We can see some aliasing in the above spheres, in oder eliminate this aliasing effects, we need to sample several rays for one pixel. This can be done by randomly add some real numbers between 0 and 1, and average the output of the rays.
+We can see some aliasing in the above spheres, in oder eliminate this aliasing effects, we need to sample several rays for one pixel. This can be done by randomly add some real numbers between 0 and 1, and average the output of the rays. The more random number we sampled, the better anti-aliasing effect is. Owing to the large number sampling will slow down the rendering speed, here we only use a sampling number equals to 10. Following is the effect. We  can observ improvement of rendering qualiies (especially the boundary of spheres).
+
+![anti_aliasing](./Chapter3/anti_aliasing.png)
 
