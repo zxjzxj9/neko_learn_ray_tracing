@@ -49,3 +49,5 @@ We can see some aliasing in the above spheres, in oder eliminate this aliasing e
 
 ![anti_aliasing](./Chapter3/anti_aliasing.png)
 
+## **Chapter 4.** Diffuse material
+Starting from this chapter, we are going to consider the material of sphere. The material of sphere will decide the appearance of a whole material. A simple class of material is called diffuse material. That means, if a light is shade on to the material, it will randomly bounces into any directions. Here we will use a uniform distribution to simulate this behavior. 
