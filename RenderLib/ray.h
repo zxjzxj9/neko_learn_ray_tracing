@@ -17,7 +17,7 @@ public:
     vec3 start() const {return s;};
     vec3 end() const {return e;};
     vec3 dv() const {return dtn;}
-    vec3 point(float c) {return c*dtn + s;}
+    vec3 point(float c) const {return c*dtn + s;}
 
 private:
     vec3 dtn;

@@ -6,6 +6,7 @@
 #define NEKO_LEARN_RAY_TRACING_GEOMETRY_H
 
 #include <math.h>
+#include <vector>
 #include "vec.h"
 #include "ray.h"
 
@@ -21,6 +22,35 @@ public:
     virtual Color color(const vec3&) = 0;
     virtual ~geometry(){}
 };
+
+// world class, containing all geometry objects
+class world {
+public:
+    world(std::vector<geometry*>& gs): gs(gs) {
+
+    }
+
+    // return the hit point in a world
+    vec3 hit(const ray& r) {
+
+        float tmp = std::numeric_limits<float>::infinity();
+        for(auto g: gs) {
+            float tmp1 = g->intercept(r);
+            if(tmp1 > 0 && tmp1 < tmp) {
+                tmp = tmp1;
+            }
+        }
+        if(isfinite(tmp)) {
+            return r.point(tmp);
+        } else {
+            return vec3{tmp, tmp, tmp};
+        }
+    }
+
+private:
+   std::vector<geometry*>& gs;
+};
+
 
 class sphere: public geometry {
 public:
@@ -51,6 +81,14 @@ public:
             (nvec[2] + 1.0)/2.0
         };
         return cfunc(nvec2);
+    }
+
+    // hit_p : hit point
+    // in_vec : input vector
+    // rec: recursive depth
+    Color diffuse(const vec3& hit_p, std::vector<geometry*> gs,  int rec=10) {
+        // Random sample a direction
+        return Color{0.0f,0.0f,0.0f};
     }
 
 private:
