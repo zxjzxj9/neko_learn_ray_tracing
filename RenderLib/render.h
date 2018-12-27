@@ -38,6 +38,14 @@ struct Color {
     unsigned char b;
 };
 
+inline Color operator*(float factor, const Color& c) {
+    return Color{factor*c.r/255.0f, factor*c.g/255.0f, factor*c.b/255.0f};
+}
+
+inline Color operator*(const Color& c, float factor) {
+    return Color{factor*c.r/255.0f, factor*c.g/255.0f, factor*c.b/255.0f};
+}
+
 class Image {
 public:
     Image(int h, int w);

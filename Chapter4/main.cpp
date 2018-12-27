@@ -51,24 +51,21 @@ void draw2(Image& img) {
     auto htot = img.get_height();
     auto wtot = img.get_width();
 
+    world wd{gs};
+
     for(auto pix = img.begin(); pix != img.end(); ++pix) {
         vec3 avg_color{0,0,0};
         for(int ns=0; ns < NS; ns++) {
             auto coord = pix.coord(true);
             auto vec = coord.first*u + coord.second*v + lt;
             auto rt = ray(origin, vec);
-            float tmp0 = std::numeric_limits<float>::infinity();
-
             Color s_color = pix.get();
-            for(auto& g: gs) {
-                float tmp1 = g->intercept(rt);
-                //std::cout<<tmp1<<"  ";
-                if(tmp1 > 0 && tmp1 < tmp0) {
-                    tmp0 = tmp1;
-                    auto p = rt.point(tmp1);
-                    s_color = g->color(p);
-                }
+
+            auto ret = wd.hit(rt);
+            if(ret.second) {
+                s_color = ret.second -> brdf(rt, wd, 10);
             }
+
             avg_color += vec3{s_color.r/(255.0*NS), s_color.g/(255.0*NS), s_color.b/(255.0*NS)};
         }
         pix.set(Color{avg_color[0], avg_color[1], avg_color[2]});

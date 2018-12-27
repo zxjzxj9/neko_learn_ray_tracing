@@ -7,6 +7,7 @@
 
 #include <math.h>
 #include <vector>
+#include <random>
 #include "vec.h"
 #include "ray.h"
 
@@ -16,11 +17,15 @@ Color green(const vec3& t) {
     return Color(0.0f, 1.0f, 0.0f);
 }
 
+class world;
+
 class geometry {
 public:
     virtual float intercept(const ray&) = 0;
     virtual Color color(const vec3&) = 0;
     virtual ~geometry(){}
+    // Define BRDF function to decide color
+    virtual Color brdf(const ray&, const world&, int) = 0;
 };
 
 // world class, containing all geometry objects
@@ -31,19 +36,22 @@ public:
     }
 
     // return the hit point in a world
-    vec3 hit(const ray& r) {
+    std::pair<vec3, geometry*> hit(const ray& r) const {
 
         float tmp = std::numeric_limits<float>::infinity();
+        geometry* retg = nullptr;
+
         for(auto g: gs) {
             float tmp1 = g->intercept(r);
             if(tmp1 > 0 && tmp1 < tmp) {
                 tmp = tmp1;
+                retg = g;
             }
         }
-        if(isfinite(tmp)) {
-            return r.point(tmp);
+        if(retg) {
+            return std::pair<vec3, geometry*> {r.point(tmp), retg};
         } else {
-            return vec3{tmp, tmp, tmp};
+            return std::pair<vec3, geometry*> {vec3{tmp, tmp, tmp}, retg};
         }
     }
 
@@ -83,18 +91,41 @@ public:
         return cfunc(nvec2);
     }
 
+
+    Color brdf(const ray& hitr, const world& w, int rec=10) {
+        return diffuse(hitr, w, rec);
+    }
+
     // hit_p : hit point
     // in_vec : input vector
     // rec: recursive depth
-    Color diffuse(const vec3& hit_p, std::vector<geometry*> gs,  int rec=10) {
+    Color diffuse(const ray& hitr, const world& w, int rec=10) {
         // Random sample a direction
-        return Color{0.0f,0.0f,0.0f};
+        // return Color{0.0f,0.0f,0.0f};
+        auto retp = w.hit(hitr);
+
+        if(rec == 0) {
+            return color(retp.first);
+        }
+
+        if(retp.second) {
+            vec3 randvec{dist(rg), dist(rg), dist(rg)};
+            vec3 nvec = (retp.first -rc).unit();
+            randvec = (randvec.dot(nvec)*randvec).norm();
+            ray outr(retp.first, retp.first + randvec);
+            return 0.5*retp.second->brdf(outr, w, rec - 1);
+        } else {
+            return color(retp.first);
+        }
     }
 
 private:
     vec3 rc;
     float radius;
     Color (*cfunc)(const vec3&);
+    std::mt19937 rg{std::random_device{}()};
+    std::uniform_real_distribution<float> dist{0.0, 1.0};
+
 };
 
 
