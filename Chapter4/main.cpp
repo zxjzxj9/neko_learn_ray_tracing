@@ -35,7 +35,8 @@ void background(Image& img) {
 }
 
 Color color(const vec3& n) {
-    return Color{n[0], n[1], n[2]};
+    //return Color{n[0], n[1], n[2]};
+    return Color{0.0f, 0.0f, (n[1]+1.0f)/2.0f};
 }
 
 void draw2(Image& img) {

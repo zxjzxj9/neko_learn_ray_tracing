@@ -113,6 +113,8 @@ public:
             vec3 nvec = (retp.first -rc).unit();
             randvec = (randvec.dot(nvec)*randvec).norm();
             ray outr(retp.first, retp.first + randvec);
+            //auto c = retp.second->brdf(outr, w, rec - 1);
+            //return color({1.0 - sqrt(c.r/255.0f), 1.0 - sqrt(c.g/255.0f), 1.0 - sqrt(c.b/255.0f)});
             return 0.5*retp.second->brdf(outr, w, rec - 1);
         } else {
             return color(retp.first);
