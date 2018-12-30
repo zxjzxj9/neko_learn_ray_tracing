@@ -25,7 +25,9 @@ public:
     virtual Color color(const vec3&) = 0;
     virtual ~geometry(){}
     // Define BRDF function to decide color
-    virtual Color brdf(const ray&, const world&, int) = 0;
+    virtual Color brdf(const vec3& hitp, const world&, int) = 0;
+    // return norm vector given the surface point
+    virtual vec3 normvec(const vec3& p) = 0;
 };
 
 // world class, containing all geometry objects
@@ -92,33 +94,44 @@ public:
     }
 
 
-    Color brdf(const ray& hitr, const world& w, int rec=10) {
-        return diffuse(hitr, w, rec);
+    Color brdf(const vec3& hitp, const world& w, int rec=10) {
+        return diffuse(hitp, w, rec);
     }
+
 
     // hit_p : hit point
     // in_vec : input vector
     // rec: recursive depth
-    Color diffuse(const ray& hitr, const world& w, int rec=10) {
-        // Random sample a direction
-        // return Color{0.0f,0.0f,0.0f};
-        auto retp = w.hit(hitr);
+    Color diffuse(const vec3& hitp, const world& w, int rec=10) {
 
+        auto nvec = this -> normvec(hitp);
+
+        // if max hit number
         if(rec == 0) {
-            return color(retp.first);
+            return color(nvec);
         }
+
+        // if not exceed max hit number
+        vec3 randvec{dist(rg), dist(rg), dist(rg)};
+        randvec = (randvec.dot(nvec)*randvec).unit();
+        ray outr(hitp, hitp + randvec);
+        auto retp = w.hit(outr);
 
         if(retp.second) {
-            vec3 randvec{dist(rg), dist(rg), dist(rg)};
-            vec3 nvec = (retp.first -rc).unit();
-            randvec = (randvec.dot(nvec)*randvec).norm();
-            ray outr(retp.first, retp.first + randvec);
+            //vec3 nvec = retp.second -> normvec(retp.first);
+            //ray outr(retp.first, retp.first + randvec);
             //auto c = retp.second->brdf(outr, w, rec - 1);
             //return color({1.0 - sqrt(c.r/255.0f), 1.0 - sqrt(c.g/255.0f), 1.0 - sqrt(c.b/255.0f)});
-            return 0.5*retp.second->brdf(outr, w, rec - 1);
+            return 0.5*retp.second->brdf(retp.first, w, rec - 1);
         } else {
-            return color(retp.first);
+            return color(nvec);
         }
+
+    }
+
+
+    vec3 normvec(const vec3& v) {
+         return (v-rc).unit();
     }
 
 private:
