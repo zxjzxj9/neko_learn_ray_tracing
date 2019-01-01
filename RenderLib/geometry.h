@@ -61,11 +61,17 @@ private:
    std::vector<geometry*>& gs;
 };
 
+enum Material {
+    DIFFUSE,
+    METAL,
+};
+
 
 class sphere: public geometry {
 public:
 
-    sphere(vec3 rc, float radius, Color(*cfunc)(const vec3&) = green): rc(rc), radius(radius), cfunc(cfunc) {
+    sphere(vec3 rc, float radius, Color(*cfunc)(const vec3&) = green, Material material=DIFFUSE):
+            rc(rc), radius(radius), cfunc(cfunc), material(material) {
     }
 
     ~sphere(){};
@@ -95,7 +101,13 @@ public:
 
 
     Color brdf(const vec3& hitp, const world& w, int rec=10) {
-        return diffuse(hitp, w, rec);
+        // Select material and return the corresponding color
+        switch (material) {
+            case DIFFUSE:
+                return diffuse(hitp, w, rec);
+            default:
+                return Color{0.0f, 0.0f, 0.0f};
+        }
     }
 
 
@@ -140,7 +152,7 @@ private:
     Color (*cfunc)(const vec3&);
     std::mt19937 rg{std::random_device{}()};
     std::uniform_real_distribution<float> dist{0.0, 1.0};
-
+    Material material;
 };
 
 
