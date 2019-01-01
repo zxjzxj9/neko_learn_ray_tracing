@@ -69,7 +69,7 @@ void draw2(Image& img) {
 
             avg_color += vec3{s_color.r/(255.0*NS), s_color.g/(255.0*NS), s_color.b/(255.0*NS)};
         }
-        pix.set(Color{pow(avg_color[0],  2.0f), pow(avg_color[1], 2.0f), pow(avg_color[2], 2.0f)});
+        pix.set(Color{pow(avg_color[0],  1.0f), pow(avg_color[1], 1.0f), pow(avg_color[2], 1.0f)});
     }
 
 }
