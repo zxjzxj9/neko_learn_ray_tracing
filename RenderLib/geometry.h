@@ -105,6 +105,7 @@ public:
         switch (material) {
             case DIFFUSE:
                 return diffuse(hitp, w, rec);
+            case METAL:
             default:
                 return Color{0.0f, 0.0f, 0.0f};
         }

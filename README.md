@@ -55,4 +55,4 @@ Starting from this chapter, we are going to consider the material of sphere. The
 ![diffuse_material](./Chapter4/diffuse_material.png)
 
 ## **Chapter 5.** Metal material
-
+Then we can start with metal material. Then metal material is different from the diffuse material that it can reflect the light with some specified directions. We would like to specify a reflectivity and diffusity for this material.
