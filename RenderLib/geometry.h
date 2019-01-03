@@ -142,6 +142,18 @@ public:
 
     }
 
+    Color metal(const vec3& hitp, const world& w, int rec=10) {
+
+        auto nvec = this -> normvec(hitp);
+
+        // if max hit number
+        if(rec == 0) {
+            return color(nvec);
+        }
+
+        return color(nvec);
+    }
+
 
     vec3 normvec(const vec3& v) {
          return (v-rc).unit();
