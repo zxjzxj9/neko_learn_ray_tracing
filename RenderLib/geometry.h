@@ -61,20 +61,44 @@ private:
    std::vector<geometry*>& gs;
 };
 
+
 enum Material {
     DIFFUSE,
     METAL,
+};
+
+class MaterialTrait {
+public:
+    MaterialTrait(Material m, float reflectivity = 0.5, float diffusivity = 0.0):
+    m(m), reflectivity(reflectivity), diffusivity(diffusivity){
+    }
+
+//private:
+    Material m;
+    float reflectivity;
+    float diffusivity;
+
+    // allocated by inner class
+    bool allocated = false;
 };
 
 
 class sphere: public geometry {
 public:
 
-    sphere(vec3 rc, float radius, Color(*cfunc)(const vec3&) = green, Material material=DIFFUSE):
-            rc(rc), radius(radius), cfunc(cfunc), material(material) {
+    sphere(vec3 rc, float radius, Color(*cfunc)(const vec3&) = green, MaterialTrait* mt = nullptr):
+            rc(rc), radius(radius), cfunc(cfunc), mt(mt) {
+        if(!mt) {
+            mt = new MaterialTrait(DIFFUSE, 0.5, 1.0);
+            mt->allocated = true;
+        }
     }
 
-    ~sphere(){};
+
+    ~sphere(){
+        if(mt->allocated) delete mt;
+    };
+
     // return parameters
     float intercept(const ray& r) {
         vec3 dv = r.dv();
@@ -102,7 +126,7 @@ public:
 
     Color brdf(const vec3& hitp, const world& w, int rec=10) {
         // Select material and return the corresponding color
-        switch (material) {
+        switch (mt->m) {
             case DIFFUSE:
                 return diffuse(hitp, w, rec);
             case METAL:
@@ -165,7 +189,7 @@ private:
     Color (*cfunc)(const vec3&);
     std::mt19937 rg{std::random_device{}()};
     std::uniform_real_distribution<float> dist{0.0, 1.0};
-    Material material;
+    MaterialTrait* mt;
 };
 
 
