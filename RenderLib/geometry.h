@@ -25,7 +25,7 @@ public:
     virtual Color color(const vec3&) = 0;
     virtual ~geometry(){}
     // Define BRDF function to decide color
-    virtual Color brdf(const vec3& hitp, const world&, int) = 0;
+    virtual Color brdf(const vec3& vec_in, const vec3& hitp, const world&, int) = 0;
     // return norm vector given the surface point
     virtual vec3 normvec(const vec3& p) = 0;
 };
@@ -124,12 +124,13 @@ public:
     }
 
 
-    Color brdf(const vec3& hitp, const world& w, int rec=10) {
+    Color brdf(const vec3& vec_in, const vec3& hitp, const world& w, int rec=10) {
         // Select material and return the corresponding color
         switch (mt->m) {
             case DIFFUSE:
-                return diffuse(hitp, w, rec);
+                return diffuse(vec_in, hitp, w, rec);
             case METAL:
+                return metal(vec_in, hitp, w, rec);
             default:
                 return Color{0.0f, 0.0f, 0.0f};
         }
@@ -139,7 +140,7 @@ public:
     // hit_p : hit point
     // in_vec : input vector
     // rec: recursive depth
-    Color diffuse(const vec3& hitp, const world& w, int rec=10) {
+    Color diffuse(const vec3& vec_in, const vec3& hitp, const world& w, int rec=10) {
 
         auto nvec = this -> normvec(hitp);
 
@@ -159,20 +160,46 @@ public:
             //ray outr(retp.first, retp.first + randvec);
             //auto c = retp.second->brdf(outr, w, rec - 1);
             //return color({1.0 - sqrt(c.r/255.0f), 1.0 - sqrt(c.g/255.0f), 1.0 - sqrt(c.b/255.0f)});
-            return 0.5*retp.second->brdf(retp.first, w, rec - 1);
+            return 0.5*retp.second->brdf(outr.dv(), retp.first, w, rec - 1);
         } else {
             return color(nvec);
         }
 
     }
 
-    Color metal(const vec3& hitp, const world& w, int rec=10) {
+    Color metal(const vec3& vec_in, const vec3& hitp, const world& w, int rec=10) {
 
         auto nvec = this -> normvec(hitp);
 
         // if max hit number
         if(rec == 0) {
             return color(nvec);
+        }
+
+        auto vec_out_n = vec_in.dot(nvec)*vec_in;
+        auto vec_out_p = vec_in - vec_out_n;
+        auto vec_out = vec_out_p - vec_out_n;
+
+        if(mt->diffusivity==0.0) {
+            ray outr(hitp, hitp + vec_out);
+            auto retp = w.hit(outr);
+            if(retp.second) {
+                return mt->reflectivity*retp.second->brdf(outr.dv(), retp.first, w, rec - 1);
+            } else {
+                return color(nvec);
+            };
+        } else {
+            vec3 randvec{dist(rg), dist(rg), dist(rg)};
+            while (randvec.dot(randvec) > mt->diffusivity || randvec.dot(nvec) < 0) {
+                randvec = vec3{dist(rg), dist(rg), dist(rg)};
+            }
+            ray outr(hitp, hitp + randvec);
+            auto retp = w.hit(outr);
+            if(retp.second) {
+                return mt->reflectivity*retp.second->brdf(outr.dv(), retp.first, w, rec - 1);
+            } else {
+                return color(nvec);
+            };
         }
 
         return color(nvec);

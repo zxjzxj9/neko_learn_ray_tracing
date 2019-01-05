@@ -64,7 +64,7 @@ void draw2(Image& img) {
 
             auto ret = wd.hit(rt);
             if(ret.second) {
-                s_color = ret.second -> brdf(ret.first, wd, 10);
+                s_color = ret.second -> brdf(rt.dv(), ret.first, wd, 10);
             }
 
             avg_color += vec3{s_color.r/(255.0*NS), s_color.g/(255.0*NS), s_color.b/(255.0*NS)};
