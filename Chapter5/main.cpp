@@ -41,13 +41,17 @@ Color color(const vec3& n) {
 
 void draw2(Image& img) {
     vec3 rc1(0.0, 0.0, -2.0);
-    vec3 rc2(0.0, -100.8, -2.0);
+    vec3 rc2(0.0, 0.0, 2.0);
+    MaterialTrait mt1{METAL, 0.9f, 0.0f};
+    MaterialTrait mt2{METAL, 0.9f, 0.0f};
+    vec3 rc0(0.0, -100.8, -2.0);
     //sphere sp1(rc1, 1.0);
     //sphere sp2(rc2, 4.0);
     std::vector<geometry*> gs;
-    gs.push_back(new sphere(rc1, 1.0, color));
+    gs.push_back(new sphere(rc0, 100));
+    gs.push_back(new sphere(rc1, 1.0, color, &mt1));
+    gs.push_back(new sphere(rc2, 1.0, color, &mt2));
     //gs.push_back(new sphere(rc1, 1.0));
-    gs.push_back(new sphere(rc2, 100));
 
     auto htot = img.get_height();
     auto wtot = img.get_width();
