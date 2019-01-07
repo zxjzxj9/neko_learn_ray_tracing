@@ -89,8 +89,8 @@ public:
     sphere(vec3 rc, float radius, Color(*cfunc)(const vec3&) = green, MaterialTrait* mt = nullptr):
             rc(rc), radius(radius), cfunc(cfunc), mt(mt) {
         if(!mt) {
-            mt = new MaterialTrait(DIFFUSE, 0.5, 1.0);
-            mt->allocated = true;
+            this->mt = new MaterialTrait(DIFFUSE, 0.5, 1.0);
+            this->mt->allocated = true;
         }
     }
 
