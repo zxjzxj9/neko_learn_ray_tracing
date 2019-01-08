@@ -176,7 +176,7 @@ public:
             return color(nvec);
         }
 
-        auto vec_out_n = vec_in.dot(nvec)*vec_in;
+        auto vec_out_n = vec_in.dot(nvec)*nvec;
         auto vec_out_p = vec_in - vec_out_n;
         auto vec_out = vec_out_p - vec_out_n;
 

@@ -40,8 +40,8 @@ Color color(const vec3& n) {
 }
 
 void draw2(Image& img) {
-    vec3 rc1(0.0, 0.0, -2.0);
-    vec3 rc2(0.0, 0.0, 2.0);
+    vec3 rc1(1.5, 0.0, -2.0);
+    vec3 rc2(-1.5, 0.0, -2.0);
     MaterialTrait mt1{METAL, 0.9f, 0.0f};
     MaterialTrait mt2{METAL, 0.9f, 0.0f};
     vec3 rc0(0.0, -100.8, -2.0);
