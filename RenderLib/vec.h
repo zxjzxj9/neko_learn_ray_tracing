@@ -52,6 +52,7 @@ public:
         }
     }
 
+
     vec& operator=(const vec& v) {
        assert(this->dim == v.dim);
        if(!data) {
@@ -67,7 +68,7 @@ public:
     //    data = std::move(v.data);
     //}
 
-    inline vec& operator+(const vec& v) const{
+    inline vec<N>& operator+(const vec& v) const{
         assert(this->dim == v.dim);
         auto ret = new vec<N>();
         for(int i=0; i<N; i++) {
