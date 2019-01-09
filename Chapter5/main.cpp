@@ -9,7 +9,7 @@
 #include <iostream>
 #include <vector>
 
-#define NS 10
+#define NS 100
 
 using vec3 = vec<3>;
 const vec3 lt(-2.0, 1.0, -1.0);
@@ -43,7 +43,7 @@ void draw2(Image& img) {
     vec3 rc1(1.5, 0.0, -2.0);
     vec3 rc2(-1.5, 0.0, -2.0);
     MaterialTrait mt1{METAL, 0.9f, 0.0f};
-    MaterialTrait mt2{METAL, 0.9f, 0.0f};
+    MaterialTrait mt2{METAL, 0.9f, 0.5f};
     vec3 rc0(0.0, -100.8, -2.0);
     //sphere sp1(rc1, 1.0);
     //sphere sp2(rc2, 4.0);

@@ -189,9 +189,9 @@ public:
                 return color(nvec);
             };
         } else {
-            vec3 randvec{dist(rg), dist(rg), dist(rg)};
-            while (randvec.dot(randvec) > mt->diffusivity || randvec.dot(nvec) < 0) {
-                randvec = vec3{dist(rg), dist(rg), dist(rg)};
+            vec3 randvec = vec3{dist(rg), dist(rg), dist(rg)}.unit();
+            while (randvec.dot(nvec) > mt->diffusivity || randvec.dot(nvec) < 0) {
+                randvec = vec3{dist(rg), dist(rg), dist(rg)}.unit();
             }
             ray outr(hitp, hitp + randvec);
             auto retp = w.hit(outr);
@@ -215,7 +215,7 @@ private:
     float radius;
     Color (*cfunc)(const vec3&);
     std::mt19937 rg{std::random_device{}()};
-    std::uniform_real_distribution<float> dist{0.0, 1.0};
+    std::uniform_real_distribution<float> dist{-1.0, 1.0};
     MaterialTrait* mt;
 };
 
