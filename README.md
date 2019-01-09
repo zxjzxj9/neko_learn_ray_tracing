@@ -57,3 +57,8 @@ Starting from this chapter, we are going to consider the material of sphere. The
 ## **Chapter 5.** Metal material
 Then we can start with metal material. Then metal material is different from the diffuse material that it can reflect the light with some specified directions. We would like to specify a reflectivity and diffusity for this material. In the following graph, we can find two metal spheres reflecting to each other.
 ![metal_material](./Chapter5/metal_material.png)
+We can also add some diffusive effects on the metals, in the following graphs, the sphere in the left the the one with diffusity equals to 0.5, and the right one is the one with diffusity equals to 0.0 (mirror reflection).
+![metal_diffuse_material](./Chapter5/metal_diffuse_material.png)
+
+## **Chapter 6.** Dielectrics
+
