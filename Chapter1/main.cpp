@@ -11,13 +11,13 @@ int main(int argc, char** argv) {
 
     Image img(h,w);
 
-    vec3 lt(-2.0, 1.0, -1.0);
-    vec3 lb(-2.0, -1.0, -1.0);
-    vec3 rt(2.0, 1.0, -1.0);
-    vec3 rb(2.0, -1.0, -1.0);
+    vec3 lt({-2.0, 1.0, -1.0});
+    vec3 lb({-2.0, -1.0, -1.0});
+    vec3 rt({2.0, 1.0, -1.0});
+    vec3 rb({2.0, -1.0, -1.0});
 
-    vec3 origin(0.0, 0.0, 0.0);
-    vec3 rc(0.0, 0.0, -2.0);
+    vec3 origin({0.0, 0.0, 0.0});
+    vec3 rc({0.0, 0.0, -2.0});
 
     sphere sp(rc, 1.0);
 
@@ -32,7 +32,7 @@ int main(int argc, char** argv) {
             auto vec = x*u + y*v + lt;
             auto unit = vec.unit();
             float t = 0.5*(unit[1] + 1.0);
-            vec3 color_vec = (1.0-t)*vec3(1.0, 1.0, 1.0) + t*vec3(0.5, 0.7, 1.0);
+            vec3 color_vec = (1.0-t)*vec3({1.0, 1.0, 1.0}) + t*vec3({0.5, 0.7, 1.0});
             img.set_pixel(j, i, Color{color_vec[0], color_vec[1], color_vec[2]});
 
             auto rt = ray(origin, vec);

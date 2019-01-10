@@ -12,6 +12,8 @@
 #include <iostream>
 #include <cmath>
 #include <cassert>
+#include <initializer_list>
+#include <algorithm>
 #include "render.h"
 
 template <int N>
@@ -19,27 +21,29 @@ class vec {
 public:
     const int dim = N;
     // Sadly va_list not support float
-    vec(double a1, ...) {
-        data = std::unique_ptr<float []>(new float[N]);
-        va_list args;
-        va_start(args, a1);
-        data[0] = static_cast<float>(a1);
-        for(int i=1; i<N; i++) {
-            data[i] = static_cast<float>(va_arg(args, double));
-        }
-        va_end(args);
+    vec(const std::initializer_list<float>& a) {
+        this->data = std::unique_ptr<float []>(new float[N]);
+        assert(a.size()==N);
+        std::copy(std::begin(a), std::end(a), this->data.get());
     }
 
-    vec(Color c, double a1, ...): c(c) {
-        data = std::unique_ptr<float []>(new float[N]);
-        va_list args;
-        va_start(args, a1);
-        data[0] = static_cast<float>(a1);
-        for(int i=1; i<N; i++) {
-            data[i] = static_cast<float>(va_arg(args, double));
-        }
-        va_end(args);
+
+    vec(const std::initializer_list<double>& a) {
+        this->data = std::unique_ptr<float []>(new float[N]);
+        assert(a.size()==N);
+        std::transform(std::begin(a), std::end(a), data.get(), [](double x){return static_cast<float>(x);});
+        //std::copy(std::begin(a), std::end(a), data.get());
     }
+    //vec(Color c, double a1, ...): c(c) {
+    //    data = std::unique_ptr<float []>(new float[N]);
+    //    va_list args;
+    //    va_start(args, a1);
+    //    data[0] = static_cast<float>(a1);
+    //    for(int i=1; i<N; i++) {
+    //        data[i] = static_cast<float>(va_arg(args, double));
+    //    }
+    //    va_end(args);
+    //}
 
     vec() {
         data = std::unique_ptr<float []>(new float[N]);
@@ -104,6 +108,7 @@ public:
     inline vec<N> operator*(const float c) const {
         vec<N> ret{};
         for(int i=0; i<N; i++) {
+            //std::cout<<this->data[i] <<std::endl;
             ret.data[i] = this->data[i] * c;
         }
         return ret;

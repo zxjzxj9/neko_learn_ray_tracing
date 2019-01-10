@@ -27,7 +27,7 @@ int main() {
     ir.save(img);
 
 
-    vec<3> data(1.0,2.0,3.0);
+    vec<3> data({1.0,2.0,3.0});
     data.print();
 
 

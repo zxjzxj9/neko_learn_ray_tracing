@@ -9,14 +9,14 @@
 #include <iostream>
 #include <vector>
 
-#define NS 100
+#define NS 1000
 
 using vec3 = vec<3>;
-const vec3 lt(-2.0, 1.0, -1.0);
-const vec3 lb(-2.0, -1.0, -1.0);
-const vec3 rt(2.0, 1.0, -1.0);
-const vec3 rb(2.0, -1.0, -1.0);
-const vec3 origin(0.0, 0.0, 0.0);
+const vec3 lt({-2.0, 1.0, -1.0});
+const vec3 lb({-2.0, -1.0, -1.0});
+const vec3 rt({2.0, 1.0, -1.0});
+const vec3 rb({2.0, -1.0, -1.0});
+const vec3 origin({0.0, 0.0, 0.0});
 // const vec3 rc(0.0, 0.0, -2.0);
 
 auto u = rt - lt;
@@ -28,7 +28,7 @@ void background(Image& img) {
         auto vec = coord.first*u + coord.second*v + lt;
         auto unit = vec.unit();
         float t = 0.5*(unit[1] + 1.0);
-        vec3 color_vec = (1.0-t)*vec3(1.0, 1.0, 1.0) + t*vec3(0.5, 0.7, 1.0);
+        vec3 color_vec = (1.0-t)*vec3({1.0, 1.0, 1.0}) + t*vec3({0.5, 0.7, 1.0});
         pix.set( Color{color_vec[0], color_vec[1], color_vec[2]});
     }
     return;
@@ -40,11 +40,11 @@ Color color(const vec3& n) {
 }
 
 void draw2(Image& img) {
-    vec3 rc1(1.5, 0.0, -2.0);
-    vec3 rc2(-1.5, 0.0, -2.0);
+    vec3 rc1({1.5, 0.0, -2.0});
+    vec3 rc2({-1.5, 0.0, -2.0});
     MaterialTrait mt1{METAL, 0.9f, 0.0f};
     MaterialTrait mt2{METAL, 0.9f, 0.5f};
-    vec3 rc0(0.0, -100.8, -2.0);
+    vec3 rc0({0.0, -100.8, -2.0});
     //sphere sp1(rc1, 1.0);
     //sphere sp2(rc2, 4.0);
     std::vector<geometry*> gs;
@@ -59,7 +59,7 @@ void draw2(Image& img) {
     world wd{gs};
 
     for(auto pix = img.begin(); pix != img.end(); ++pix) {
-        vec3 avg_color{0,0,0};
+        vec3 avg_color({0.0f,0.0f,0.0f});
         for(int ns=0; ns < NS; ns++) {
             auto coord = pix.coord(true);
             auto vec = coord.first*u + coord.second*v + lt;
