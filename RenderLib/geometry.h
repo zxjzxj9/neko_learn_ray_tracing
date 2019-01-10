@@ -53,7 +53,7 @@ public:
         if(retg) {
             return std::pair<vec3, geometry*> {r.point(tmp), retg};
         } else {
-            return std::pair<vec3, geometry*> {vec3{tmp, tmp, tmp}, retg};
+            return std::pair<vec3, geometry*> {vec3({tmp, tmp, tmp}), retg};
         }
     }
 
@@ -116,9 +116,9 @@ public:
     Color color(const vec3& t) {
         vec3 nvec = (t - rc).unit();
         vec3 nvec2{
-            (nvec[0] + 1.0)/2.0,
-            (nvec[1] + 1.0)/2.0,
-            (nvec[2] + 1.0)/2.0
+            (nvec[0] + 1.0f)/2.0f,
+            (nvec[1] + 1.0f)/2.0f,
+            (nvec[2] + 1.0f)/2.0f
         };
         return cfunc(nvec2);
     }
