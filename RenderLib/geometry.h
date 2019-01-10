@@ -86,7 +86,7 @@ public:
 class sphere: public geometry {
 public:
 
-    sphere(vec3 rc, float radius, Color(*cfunc)(const vec3&) = green, MaterialTrait* mt = nullptr):
+    sphere(const vec3& rc, float radius, Color(*cfunc)(const vec3&) = green, MaterialTrait* mt = nullptr):
             rc(rc), radius(radius), cfunc(cfunc), mt(mt) {
         if(!mt) {
             this->mt = new MaterialTrait(DIFFUSE, 0.5, 1.0);
