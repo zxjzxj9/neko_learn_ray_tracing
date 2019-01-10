@@ -61,5 +61,8 @@ Then we can start with metal material. Then metal material is different from the
 We can also add some diffusive effects on the metals, in the following graphs, the sphere in the left the the one with diffusity equals to 0.5, and the right one is the one with diffusity equals to 0.0 (mirror reflection). Notice here we have add an anti-aliasing x100, and it seems to be clearer than the usually x10 we use.
 ![metal_diffuse_material](./Chapter5/metal_diffuse_material.png)
 
+Of course, we can have images with more sampling, see the image below. Now it looks super clear!
+![metal_diffuse_material_super_resolution](./Chapter5/metal_diffuse_material_super_resolution.png)
+
 ## **Chapter 6.** Dielectrics
 

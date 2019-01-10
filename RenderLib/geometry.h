@@ -178,7 +178,7 @@ public:
 
         auto vec_out_n = vec_in.dot(nvec)*nvec;
         auto vec_out_p = vec_in - vec_out_n;
-        auto vec_out = vec_out_p - vec_out_n;
+        auto vec_out = (vec_out_p - vec_out_n).unit();
 
         if(mt->diffusivity==0.0) {
             ray outr(hitp, hitp + vec_out);
@@ -190,7 +190,7 @@ public:
             };
         } else {
             vec3 randvec = vec3{dist(rg), dist(rg), dist(rg)}.unit();
-            while (randvec.dot(nvec) > mt->diffusivity || randvec.dot(nvec) < 0) {
+            while (randvec.dot(vec_out) > mt->diffusivity || randvec.dot(nvec) < 0) {
                 randvec = vec3{dist(rg), dist(rg), dist(rg)}.unit();
             }
             ray outr(hitp, hitp + randvec);
