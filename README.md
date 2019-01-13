@@ -67,4 +67,5 @@ Of course, we can have images with more sampling, see the image below. Now it lo
 
 
 ## **Chapter 6.** Dielectrics
-
+Many materials has both reflection and refraction part. The reflection part can be described as follows, and the refraction part can be described with Snell's law, where n is the refraction indices (for air the value is near 1.0, and for glass the value is near 1.3-1.7)
+$$n_1sin\left(\theta_1\right)=n_2sin\left(\theta_2\right)$$
