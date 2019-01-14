@@ -251,7 +251,7 @@ public:
             ray outr(hitp, hitp + vec_out);
             auto retp = w.hit(outr);
             if(retp.second) {
-                return mt->reflectivity*retp.second->brdf(outr.dv(), retp.first, w, rec - 1);
+                return mt->refractivity*retp.second->brdf(outr.dv(), retp.first, w, rec - 1);
             } else {
                 return color(nvec);
             };
