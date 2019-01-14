@@ -217,7 +217,46 @@ public:
     }
 
     Color glass(const vec3& vec_in, const vec3& hitp, const world& w, int rec=10) {
+        auto nvec = this -> normvec(hitp);
+        if(rec == 0) return color(nvec);
 
+        float p = (dist(rg)+1.0f)/2.0f;
+        float ratio = mt->reflectivity/(mt->refractivity+mt->reflectivity);
+        float ct1 = nvec.dot(vec_in)/(nvec.norm()*vec_in.norm());
+        float st1 = sqrt(1-ct1*ct1);
+        float st2 = 0.0f;
+        if(vec_in.dot(nvec)<0) {
+            st2 = st1/mt->refrac_ind;
+        } else {
+            st2 = st1*mt->refrac_ind;
+        }
+
+        auto vec_out_n = vec_in.dot(nvec)*nvec;
+        auto vec_out_p = vec_in - vec_out_n;
+        if(p<mt->reflectivity/(mt->refractivity+mt->reflectivity) || st2 >= 1.0f) {
+            // reflection case, for simplicity not considering diffusion
+            auto vec_out = (vec_out_p - vec_out_n).unit();
+            ray outr(hitp, hitp + vec_out);
+            auto retp = w.hit(outr);
+            if(retp.second) {
+                return mt->reflectivity*retp.second->brdf(outr.dv(), retp.first, w, rec - 1);
+            } else {
+                return color(nvec);
+            };
+        } else {
+            // refraction case
+            auto vec_out_n = vec_in.dot(nvec)*nvec;
+            float tt2 = st2/sqrt(1-st2*st2);
+            auto vec_out = vec_out_n.norm()*tt2*vec_out_p.unit();
+            ray outr(hitp, hitp + vec_out);
+            auto retp = w.hit(outr);
+            if(retp.second) {
+                return mt->reflectivity*retp.second->brdf(outr.dv(), retp.first, w, rec - 1);
+            } else {
+                return color(nvec);
+            };
+        }
+        return color(nvec);
     }
 
     vec3 normvec(const vec3& v) {
