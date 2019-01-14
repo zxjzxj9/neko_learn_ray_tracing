@@ -65,19 +65,28 @@ private:
 enum Material {
     DIFFUSE,
     METAL,
+    GLASS,
 };
 
 class MaterialTrait {
 public:
-    MaterialTrait(Material m, float reflectivity = 0.5, float diffusivity = 0.0):
-    m(m), reflectivity(reflectivity), diffusivity(diffusivity){
+    MaterialTrait(Material m,
+                  float reflectivity = 0.5,
+                  float diffusivity = 0.0,
+                  float refractivity = 0.0,
+                  float refrac_ind = 1.0):
+    m(m), reflectivity(reflectivity),
+    diffusivity(diffusivity),
+    refractivity(refractivity),
+    refrac_ind(refrac_ind) {
     }
 
 //private:
     Material m;
     float reflectivity;
     float diffusivity;
-
+    float refractivity;
+    float refrac_ind;
     // allocated by inner class
     bool allocated = false;
 };
@@ -131,6 +140,8 @@ public:
                 return diffuse(vec_in, hitp, w, rec);
             case METAL:
                 return metal(vec_in, hitp, w, rec);
+            case GLASS:
+                return glass(vec_in, hitp, w, rec);
             default:
                 return Color{0.0f, 0.0f, 0.0f};
         }
@@ -205,6 +216,9 @@ public:
         return color(nvec);
     }
 
+    Color glass(const vec3& vec_in, const vec3& hitp, const world& w, int rec=10) {
+
+    }
 
     vec3 normvec(const vec3& v) {
          return (v-rc).unit();
@@ -218,6 +232,8 @@ private:
     std::uniform_real_distribution<float> dist{-1.0, 1.0};
     MaterialTrait* mt;
 };
+
+
 
 
 #endif //NEKO_LEARN_RAY_TRACING_GEOMETRY_H
