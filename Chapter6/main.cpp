@@ -36,14 +36,15 @@ void background(Image& img) {
 
 Color color(const vec3& n) {
     //return Color{n[0], n[1], n[2]};
-    return Color{0.0f, 0.0f, (n[1]+1.0f)/2.0f};
+    //return Color{0.0f, 0.0f, (n[1]+1.0f)/2.0f};
+    return Color{0.9f, 0.9f, 0.9f};
 }
 
 void draw2(Image& img) {
     vec3 rc1({1.5, 0.0, -2.0});
     vec3 rc2({-1.5, 0.0, -2.0});
     MaterialTrait mt1{METAL, 0.9f, 0.0f, 0.0f, 1.0f};
-    MaterialTrait mt2{GLASS, 0.3f, 0.0f, 0.5f, 1.5f};
+    MaterialTrait mt2{GLASS, 0.2f, 0.0f, 0.9f, 1.5f};
     vec3 rc0({0.0, -100.8, -2.0});
     //sphere sp1(rc1, 1.0);
     //sphere sp2(rc2, 4.0);
