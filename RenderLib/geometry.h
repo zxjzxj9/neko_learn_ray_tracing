@@ -246,8 +246,9 @@ public:
         } else {
             // refraction case
             auto vec_out_n = vec_in.dot(nvec)*nvec;
+            // tangent component
             float tt2 = st2/sqrt(1-st2*st2);
-            auto vec_out = vec_out_n.norm()*tt2*vec_out_p.unit();
+            auto vec_out = (vec_out_n*tt2 + vec_out_n).unit();
             ray outr(hitp, hitp + vec_out);
             auto retp = w.hit(outr);
             if(retp.second) {
