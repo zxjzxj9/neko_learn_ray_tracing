@@ -35,8 +35,10 @@ void background(Image& img) {
 }
 
 Color color(const vec3& n) {
-    //return Color{n[0], n[1], n[2]};
-    //return Color{0.0f, 0.0f, (n[1]+1.0f)/2.0f};
+    return Color{0.0f, 0.0f, (n[1]+1.0f)/2.0f};
+}
+
+Color color2(const vec3& n) {
     float t = 0.5*(n[1] + 1.0);
     vec3 color_vec = (1.0-t)*vec3({1.0, 1.0, 1.0}) + t*vec3({0.5, 0.7, 1.0});
     return Color{color_vec[0], color_vec[1], color_vec[2]};
@@ -53,7 +55,7 @@ void draw2(Image& img) {
     std::vector<geometry*> gs;
     gs.push_back(new sphere(rc0, 100));
     gs.push_back(new sphere(rc1, 1.0, color, &mt1));
-    gs.push_back(new sphere(rc2, 1.0, color, &mt2));
+    gs.push_back(new sphere(rc2, 1.0, color2, &mt2));
     //gs.push_back(new sphere(rc1, 1.0));
 
     auto htot = img.get_height();

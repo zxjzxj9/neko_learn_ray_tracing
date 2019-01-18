@@ -241,7 +241,7 @@ public:
             if(retp.second) {
                 return mt->reflectivity*retp.second->brdf(outr.dv(), retp.first, w, rec - 1);
             } else {
-                return color(nvec);
+                return color(retp.first);
             };
         } else {
             // refraction case
@@ -254,7 +254,7 @@ public:
             if(retp.second) {
                 return mt->refractivity*retp.second->brdf(outr.dv(), retp.first, w, rec - 1);
             } else {
-                return color(nvec);
+                return color(retp.first);
             };
         }
         return color(nvec);
