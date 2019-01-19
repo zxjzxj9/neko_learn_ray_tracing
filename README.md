@@ -70,3 +70,6 @@ Of course, we can have images with more sampling, see the image below. Now it lo
 Many materials has both reflection and refraction part. The reflection part can be described as follows, and the refraction part can be described with Snell's law, where n is the refraction indices (for air the value is near 1.0, and for glass the value is near 1.3-1.7)
 
 $$n_1sin\left(\theta_1\right)=n_2sin\left(\theta_2\right)$$
+
+The glass effect is as follows (the left sphere).
+![glass_material](./Chapter6/glass_material.png)
