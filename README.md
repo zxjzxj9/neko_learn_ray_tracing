@@ -73,3 +73,5 @@ $$n_1sin\left(\theta_1\right)=n_2sin\left(\theta_2\right)$$
 
 The glass effect is as follows (the left sphere).
 ![glass_material](./Chapter6/glass_material.png)
+
+## **Chapter 7.** Positional Camera
